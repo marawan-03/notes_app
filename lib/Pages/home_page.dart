@@ -24,17 +24,17 @@ class HomePage extends StatelessWidget {
               : 'assets/light_appbar_logo.svg',
         ),
         centerTitle: true,
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 10),
-            child: IconButton(
-              icon: const Icon(Icons.settings),
-              color: Theme.of(context).colorScheme.primary,
-              onPressed: () {
-              },
-            ),
-          ),
-        ],
+        // actions: [
+        //   Padding(
+        //     padding: const EdgeInsets.only(right: 10),
+        //     child: IconButton(
+        //       icon: const Icon(Icons.settings),
+        //       color: Theme.of(context).colorScheme.primary,
+        //       onPressed: () {
+        //       },
+        //     ),
+        //   ),
+        // ],
       ),
       floatingActionButton: Padding(
         padding: const EdgeInsets.all(16.0),
