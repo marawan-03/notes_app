@@ -16,7 +16,8 @@ ThemeData lightTheme = ThemeData(
     tertiary: Color(coral),
   ),
   actionIconTheme: ActionIconThemeData(
-    backButtonIconBuilder: (context) => const Icon(Icons.arrow_back_ios_new,color: Color(black),),
+    backButtonIconBuilder: (context) =>
+        const Icon(Icons.arrow_back_ios_new, color: Color(black)),
   ),
 );
 
@@ -30,6 +31,7 @@ ThemeData darkTheme = ThemeData(
     tertiary: Color(coral),
   ),
   actionIconTheme: ActionIconThemeData(
-    backButtonIconBuilder: (context) => const Icon(Icons.arrow_back_ios_new,color: Color(cream),),
+    backButtonIconBuilder: (context) =>
+        const Icon(Icons.arrow_back_ios_new, color: Color(cream)),
   ),
 );

@@ -3,15 +3,14 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:notes_app/Components/note_tile.dart';
 import 'package:provider/provider.dart';
+
 import '../Logic/note_provider.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
-
   @override
   Widget build(BuildContext context) {
-
     final notes = context.watch<NoteProvider>().notes;
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,
@@ -19,22 +18,21 @@ class HomePage extends StatelessWidget {
         elevation: 0,
         scrolledUnderElevation: 0,
         title: SvgPicture.asset(
-          Theme.of(context).brightness == Brightness.dark ?
-              'assets/dark_appbar_logo.svg'
+          Theme.of(context).brightness == Brightness.dark
+              ? 'assets/dark_appbar_logo.svg'
               : 'assets/light_appbar_logo.svg',
         ),
         centerTitle: true,
-        // actions: [
-        //   Padding(
-        //     padding: const EdgeInsets.only(right: 10),
-        //     child: IconButton(
-        //       icon: const Icon(Icons.settings),
-        //       color: Theme.of(context).colorScheme.primary,
-        //       onPressed: () {
-        //       },
-        //     ),
-        //   ),
-        // ],
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 10),
+            child: IconButton(
+              icon: const Icon(Icons.settings),
+              color: Theme.of(context).colorScheme.primary,
+              onPressed: () {},
+            ),
+          ),
+        ],
       ),
       floatingActionButton: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -48,17 +46,29 @@ class HomePage extends StatelessWidget {
         ),
       ),
       body: Padding(
-        padding: const EdgeInsets.only(right: 16,left: 16,top: 4),
-        child: MasonryGridView.builder(
-            gridDelegate: SliverSimpleGridDelegateWithMaxCrossAxisExtent(maxCrossAxisExtent: 220),
-            mainAxisSpacing: 15,
-            crossAxisSpacing: 15,
-            itemCount: notes.length,
-            itemBuilder: (context, index) {
-              return NoteTile(note: notes[index]);
-            }
-        ),
-      )
+        padding: const EdgeInsets.only(right: 16, left: 16, top: 4),
+        child: notes.length == 0
+            ? Center(
+                child: Text(
+                  'Add A New Note',
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.primary,
+                    fontSize: 20,
+                  ),
+                ),
+              )
+            : MasonryGridView.builder(
+                gridDelegate: SliverSimpleGridDelegateWithMaxCrossAxisExtent(
+                  maxCrossAxisExtent: 220,
+                ),
+                mainAxisSpacing: 15,
+                crossAxisSpacing: 15,
+                itemCount: notes.length,
+                itemBuilder: (context, index) {
+                  return NoteTile(note: notes[index]);
+                },
+              ),
+      ),
     );
   }
 }

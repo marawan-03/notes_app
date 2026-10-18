@@ -30,7 +30,6 @@ class Note {
   );
 }
 
-
 String formatedDate(DateTime d) => DateFormat('MMM d, yyyy - h:mm a').format(d);
 
 class NoteProvider with ChangeNotifier {
@@ -59,11 +58,20 @@ class NoteProvider with ChangeNotifier {
   Future<void> updateNote(String id, String title, String content) async {
     final noteIndex = _notes.indexWhere((note) => note.id == id);
     if (noteIndex != -1) {
-      _notes[noteIndex].title = title;
-      _notes[noteIndex].body = content;
-      _notes[noteIndex].date = formatedDate(DateTime.now());
+      _notes.removeAt(noteIndex);
+
+      final updatedNote = Note(
+        id: DateTime.now().toString(),
+        title: title,
+        body: content,
+        date: formatedDate(DateTime.now()),
+      );
+
+      _notes.insert(0, updatedNote);
       notifyListeners();
-      await _box.put(id, _notes[noteIndex].toMap());
+
+      await _box.delete(id);
+      await _box.put(updatedNote.id, updatedNote.toMap());
     }
   }
 
