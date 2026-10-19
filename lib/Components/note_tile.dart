@@ -63,29 +63,32 @@ class NoteTile extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text(
-              note.title,
-              maxLines: 1,
-              textDirection: directionOf(note.title),
-              overflow: TextOverflow.clip,
-              textAlign: TextAlign.start,
-              style: TextStyle(
-                fontSize: isArabic(note.title) ? 18 : 20,
-                fontWeight: FontWeight.bold,
+            if (note.title.isNotEmpty)
+              Text(
+                note.title,
+                maxLines: 1,
+                textDirection: directionOf(note.title),
+                overflow: TextOverflow.clip,
+                textAlign: TextAlign.start,
+                style: TextStyle(
+                  fontSize: isArabic(note.title) ? 18 : 20,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
-            ),
-            SizedBox(height: 8),
-            Text(
-              note.body,
-              maxLines: 5,
-              style: TextStyle(
-                fontSize: isArabic(note.body) ? 12 : 14,
-                height: 1.6,
+            if (note.title.isNotEmpty && note.body.isNotEmpty)
+              SizedBox(height: 8),
+            if (note.body.isNotEmpty)
+              Text(
+                note.body,
+                maxLines: 5,
+                style: TextStyle(
+                  fontSize: isArabic(note.body) ? 12 : 14,
+                  height: 1.6,
+                ),
+                textDirection: directionOf(note.body),
+                textAlign: TextAlign.start,
+                overflow: TextOverflow.clip,
               ),
-              textDirection: directionOf(note.body),
-              textAlign: TextAlign.start,
-              overflow: TextOverflow.clip,
-            ),
             const SizedBox(height: 12),
             Text(
               note.date,
