@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 
 import '../Logic/note_provider.dart';
 import '../Pages/note_page.dart';
+import 'delete_dialogue_box.dart';
 
 class NoteTile extends StatelessWidget {
   final Note note;
@@ -31,7 +32,7 @@ class NoteTile extends StatelessWidget {
               value: 'delete',
               child: ListTile(
                 leading: Icon(Icons.delete),
-                title: Text('Delete'),
+                title: Text('Delete Note'),
               ),
             ),
           ],
@@ -39,10 +40,15 @@ class NoteTile extends StatelessWidget {
         );
         if (selectedValue != null) {
           if (selectedValue == 'delete') {
-            Provider.of<NoteProvider>(
-              context,
-              listen: false,
-            ).deleteNote(note.id);
+            final bool? confirmDelete = await showDialog<bool>(
+              context: context,
+              builder: (BuildContext context) {
+                return DeleteDialogueBox(note: note);
+              },
+            );
+            if (confirmDelete == true) {
+              context.read<NoteProvider>().deleteNote(note.id);
+            }
           }
         }
       },

@@ -12,7 +12,6 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     final notes = context.watch<NoteProvider>().notes;
     final isGrid = context.watch<SettingsProvider>().isGrid;
 
@@ -33,9 +32,12 @@ class HomePage extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(right: 10),
                 child: IconButton(
-                  icon: Icon(isGrid ? Icons.view_agenda_outlined : Icons.grid_view),
+                  icon: Icon(
+                    isGrid ? Icons.view_agenda_outlined : Icons.grid_view,
+                  ),
                   color: Theme.of(context).colorScheme.primary,
-                  onPressed: () => context.read<SettingsProvider>().toggleView(),
+                  onPressed: () =>
+                      context.read<SettingsProvider>().toggleView(),
                 ),
               ),
             ],
@@ -56,11 +58,11 @@ class HomePage extends StatelessWidget {
             child: MasonryGridView.builder(
               gridDelegate: isGrid
                   ? const SliverSimpleGridDelegateWithMaxCrossAxisExtent(
-                maxCrossAxisExtent: 220,
-              )
+                      maxCrossAxisExtent: 220,
+                    )
                   : const SliverSimpleGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 1,
-              ),
+                      crossAxisCount: 1,
+                    ),
               mainAxisSpacing: 15,
               crossAxisSpacing: 15,
               itemCount: notes.length,
