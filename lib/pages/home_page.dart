@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:notes_app/Components/note_tile.dart';
+import 'package:notes_app/components/note_tile.dart';
 import 'package:provider/provider.dart';
 
-import '../Logic/note_provider.dart';
-import '../Logic/settings_provider.dart';
+import '../logic/note_provider.dart';
+import '../logic/settings_provider.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});

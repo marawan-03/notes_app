@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../Logic/note_provider.dart';
-
 class DeleteDialogueBox extends StatelessWidget {
-  final Note note;
 
-  const DeleteDialogueBox({super.key, required this.note});
+  const DeleteDialogueBox({super.key});
 
   @override
   Widget build(BuildContext context) {

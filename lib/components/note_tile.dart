@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:notes_app/Logic/auto_direction.dart';
+import 'package:notes_app/logic/auto_direction.dart';
 import 'package:provider/provider.dart';
 
-import '../Logic/note_provider.dart';
-import '../Pages/note_page.dart';
+import '../logic/note_provider.dart';
+import '../pages/note_page.dart';
 import 'delete_dialogue_box.dart';
 
 class NoteTile extends StatelessWidget {
@@ -38,19 +38,15 @@ class NoteTile extends StatelessWidget {
           ],
           elevation: 8.0,
         );
-        if (selectedValue != null) {
-          if (selectedValue == 'delete') {
-            final bool? confirmDelete = await showDialog<bool>(
-              context: context,
-              builder: (BuildContext context) {
-                return DeleteDialogueBox(note: note);
-              },
-            );
-            if (confirmDelete == true) {
-              context.read<NoteProvider>().deleteNote(note.id);
-            }
-          }
-        }
+        if (selectedValue != 'delete' || !context.mounted) return;
+        final bool? confirmDelete = await showDialog<bool>(
+          context: context,
+          builder: (BuildContext context) {
+            return DeleteDialogueBox();
+          },
+        );
+        if (confirmDelete != true || !context.mounted) return;
+        context.read<NoteProvider>().deleteNote(note.id);
       },
       child: Container(
         padding: EdgeInsets.all(16),

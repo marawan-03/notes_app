@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:notes_app/Logic/auto_direction.dart';
+import 'package:notes_app/logic/auto_direction.dart';
 import 'package:provider/provider.dart';
 
-import '../Logic/note_provider.dart';
+import '../logic/note_provider.dart';
 
 class NotePage extends StatefulWidget {
   final Note? note;
@@ -38,21 +38,23 @@ class _NotePageState extends State<NotePage> {
     final title = _titleController.text.trim();
     final body = _bodyController.text.trim();
     final provider = context.read<NoteProvider>();
+    final note = widget.note;
 
-    if (title.isNotEmpty || body.isNotEmpty) {
-      if (widget.note == null) {
-        provider.addNote(
-          Note(
-            id: DateTime.now().toString(),
-            title: title,
-            body: body,
-            date: formatedDate(DateTime.now()),
-          ),
-        );
-      } else {
-        provider.updateNote(widget.note!.id, title, body);
-      }
+    if (title.isEmpty && body.isEmpty) {
+      if (note != null) provider.deleteNote(note.id);
+    } else if (note == null) {
+      provider.addNote(
+        Note(
+          id: DateTime.now().toString(),
+          title: title,
+          body: body,
+          date: formatedDate(DateTime.now()),
+        ),
+      );
+    } else if (title != note.title || body != note.body) {
+      provider.updateNote(note.id, title, body);
     }
+
     Navigator.pop(context);
   }
 

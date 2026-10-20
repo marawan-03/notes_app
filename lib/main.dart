@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:notes_app/Pages/note_page.dart';
+import 'package:notes_app/pages/note_page.dart';
 import 'package:notes_app/Theme/app_theme.dart';
 import 'package:provider/provider.dart';
 
-import 'Logic/note_provider.dart';
-import 'Logic/settings_provider.dart';
-import 'Pages/home_page.dart';
+import 'logic/note_provider.dart';
+import 'logic/settings_provider.dart';
+import 'pages/home_page.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -36,9 +36,8 @@ class MyApp extends StatelessWidget {
       darkTheme: darkTheme,
       routes: {
         '/notepage': (context) => NotePage(),
-        '/homepage': (context) => HomePage(),
       },
-      home: HomePage(),
+      home: const HomePage(),
     );
   }
 }

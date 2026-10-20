@@ -7,19 +7,22 @@ class Note {
   String title;
   String body;
   String date;
+  int updatedAt;
 
   Note({
     required this.id,
     required this.title,
     required this.body,
     required this.date,
-  });
+    int? updatedAt,
+  }) : updatedAt = updatedAt ?? DateTime.now().millisecondsSinceEpoch;
 
   Map<String, dynamic> toMap() => {
     'id': id,
     'title': title,
     'body': body,
     'date': date,
+    'updatedAt': updatedAt,
   };
 
   factory Note.fromMap(Map map) => Note(
@@ -27,6 +30,8 @@ class Note {
     title: map['title'],
     body: map['body'],
     date: map['date'],
+    updatedAt:
+    map['updatedAt'] ?? DateTime.tryParse(map['id'])?.millisecondsSinceEpoch,
   );
 }
 
@@ -46,7 +51,7 @@ class NoteProvider with ChangeNotifier {
     for (final item in _box.values) {
       _notes.add(Note.fromMap(Map.from(item)));
     }
-    _notes.sort((a, b) => b.id.compareTo(a.id));
+    _notes.sort((a, b) => b.updatedAt.compareTo(a.updatedAt));
   }
 
   Future<void> addNote(Note note) async {
@@ -56,23 +61,20 @@ class NoteProvider with ChangeNotifier {
   }
 
   Future<void> updateNote(String id, String title, String content) async {
-    final noteIndex = _notes.indexWhere((note) => note.id == id);
-    if (noteIndex != -1) {
-      _notes.removeAt(noteIndex);
+    final index = _notes.indexWhere((note) => note.id == id);
+    if (index == -1) return;
 
-      final updatedNote = Note(
-        id: DateTime.now().toString(),
-        title: title,
-        body: content,
-        date: formatedDate(DateTime.now()),
-      );
+    final now = DateTime.now();
+    final note = _notes.removeAt(index);
 
-      _notes.insert(0, updatedNote);
-      notifyListeners();
+    note.title = title;
+    note.body = content;
+    note.date = formatedDate(now);
+    note.updatedAt = now.millisecondsSinceEpoch;
 
-      await _box.delete(id);
-      await _box.put(updatedNote.id, updatedNote.toMap());
-    }
+    _notes.insert(0, note);
+    notifyListeners();
+    await _box.put(note.id, note.toMap());
   }
 
   Future<void> deleteNote(String id) async {
